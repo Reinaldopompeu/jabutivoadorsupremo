@@ -1,0 +1,11 @@
+{
+  "name": "pinguim-financeiro-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node -c api/google-sheets.js"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  }
+}

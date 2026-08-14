@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aba Inicial - Modelo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --page: #ffffff;
+      --sidebar: #e9e9e9;
+      --card: #ffffff;
+      --pill: #eeeeee;
+      --line: #d8d8d8;
+      --grid: #e2e2e2;
+      --text: #000000;
+      --muted: #9a9a9a;
+      --blue: #2b68f6;
+      --green: #2ec978;
+      --red: #ff1d25;
+      --shadow: 0 15px 28px rgba(0, 0, 0, .08);
+      --radius: 7px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--page);
+      color: var(--text);
+      font-family: Rubik, Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      color: inherit;
+      background: transparent;
+    }
+
+    body.nav-collapsed .app {
+      grid-template-columns: 84px minmax(0, 1fr);
+    }
+
+    body.nav-collapsed .sidebar {
+      padding-inline: 14px;
+      align-items: center;
+    }
+
+    body.nav-collapsed .menu-head {
+      grid-template-columns: 42px;
+      gap: 14px;
+    }
+
+    body.nav-collapsed .menu-title,
+    body.nav-collapsed .nav-item span {
+      display: none;
+    }
+
+    body.nav-collapsed .nav-item {
+      width: 48px;
+      height: 48px;
+      min-height: 48px;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      padding: 0;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 285px minmax(0, 1fr);
+      background: #fff;
+    }
+
+    .sidebar {
+      min-height: 100vh;
+      background: var(--sidebar);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+    }
+
+    .menu-head {
+      display: grid;
+      grid-template-columns: 42px 1fr 32px;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .company-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #f6f6f6;
+      border: 1px solid #c9a646;
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .company-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .menu-title {
+      text-align: center;
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    .menu-toggle {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+    }
+
+    .menu-toggle svg,
+    .nav-item svg,
+    .top-icon svg,
+    .filter-pill svg,
+    .search svg,
+    .metric-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+    }
+
+    .nav-item {
+      min-height: 40px;
+      border-radius: 7px;
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      align-items: center;
+      gap: 18px;
+      padding: 0 16px;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .nav-item.active {
+      background: #d7d7d7;
+    }
+
+    .nav-item:hover,
+    .filter-pill:hover,
+    .summary-card:hover,
+    .top-icon:hover,
+    .menu-toggle:hover {
+      filter: brightness(.97);
+    }
+
+    .main {
+      min-width: 0;
+      padding: 24px 40px 60px;
+    }
+
+    .topbar {
+      height: 60px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .company-name {
+      grid-column: 2;
+      font-size: 17px;
+      font-weight: 900;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .top-actions {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .top-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+    }
+
+    .add-button {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: #2774dc;
+      box-shadow: 0 12px 20px rgba(39, 116, 220, .28);
+    }
+
+    .add-button svg {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 230px 112px minmax(180px, 228px);
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+      margin: 0 0 20px;
+    }
+
+    .filter-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .filter-pill,
+    .search {
+      height: 42px;
+      border-radius: 7px;
+      background: var(--pill);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 14px;
+      color: #000;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .filter-pill {
+      justify-content: space-between;
+    }
+
+    .filter-pill.active {
+      box-shadow: 0 0 0 2px rgba(43, 104, 246, .18);
+    }
+
+    .filter-pill svg:first-child,
+    .search svg {
+      color: #000;
+      flex: 0 0 auto;
+    }
+
+    .filter-pill .chevron {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2.2;
+      margin-left: auto;
+    }
+
+    .search {
+      justify-self: end;
+      width: 228px;
+      color: #969696;
+    }
+
+    .search input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: #000;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .search input::placeholder {
+      color: #9c9c9c;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .summary-card {
+      min-height: 156px;
+      padding: 28px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid var(--line);
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .summary-card:active {
+      transform: scale(.992);
+    }
+
+    .summary-card:last-child {
+      border-right: 0;
+    }
+
+    .metric-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+      color: #2276df;
+      background: #dbeaff;
+    }
+
+    .metric-icon.green {
+      color: #28c870;
+      background: #cdf8df;
+    }
+
+    .metric-icon.red {
+      color: #ff4a45;
+      background: #ffd6d5;
+    }
+
+    .summary-label {
+      color: #9a9a9a;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .summary-value {
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -.02em;
+    }
+
+    .chart-card {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      min-height: 500px;
+      padding: 18px 20px 12px;
+      overflow: hidden;
+    }
+
+    .chart-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 6px;
+    }
+
+    .chart-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -.02em;
+    }
+
+    .chart-subtitle {
+      margin: 6px 0 0;
+      color: #9a9a9a;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .chart-period {
+      padding-top: 10px;
+      font-size: 15px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .chart-wrap {
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .guide {
+      stroke: var(--grid);
+      stroke-width: 2;
+    }
+
+    .profit-line {
+      fill: none;
+      stroke: var(--blue);
+      stroke-width: 4.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .profit-dot {
+      fill: var(--blue);
+      stroke: #fff;
+      stroke-width: 3;
+      cursor: pointer;
+      transition: transform .18s ease, filter .18s ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .profit-dot:hover,
+    .profit-dot.active {
+      transform: scale(1.32);
+      filter: drop-shadow(0 8px 10px rgba(43, 104, 246, .22));
+    }
+
+    .value-label {
+      fill: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+
+    .value-label.highlight {
+      font-size: 17px;
+    }
+
+    .year-label {
+      fill: #000;
+      font-size: 20px;
+      font-weight: 900;
+      text-anchor: middle;
+    }
+
+    .dropdown-popover {
+      position: fixed;
+      z-index: 50;
+      min-width: 190px;
+      max-height: 280px;
+      overflow: auto;
+      padding: 6px;
+      border: 1px solid #d6dbe5;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, .16);
+    }
+
+    .dropdown-option {
+      width: 100%;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: 6px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .dropdown-option:hover,
+    .dropdown-option.active {
+      color: #fff;
+      background: #2774dc;
+    }
+
+    .chart-tooltip {
+      position: fixed;
+      z-index: 60;
+      padding: 7px 10px;
+      border-radius: 6px;
+      color: #fff;
+      background: #111;
+      font-size: 13px;
+      font-weight: 800;
+      pointer-events: none;
+      transform: translate(-50%, calc(-100% - 12px));
+      white-space: nowrap;
+    }
+
+    .toast-wrap {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 90;
+      display: grid;
+      gap: 10px;
+    }
+
+    .toast {
+      min-width: 240px;
+      max-width: 340px;
+      padding: 13px 15px;
+      border-radius: 8px;
+      color: #fff;
+      background: #111;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, .22);
+      font-size: 14px;
+      font-weight: 800;
+      animation: toast-in .18s ease;
+    }
+
+    @keyframes toast-in {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      background: rgba(0, 0, 0, .42);
+    }
+
+    .modal-backdrop.open {
+      display: grid;
+    }
+
+    .modal-card {
+      width: min(680px, 100%);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, .28);
+      overflow: hidden;
+    }
+
+    .modal-head {
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 22px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .modal-title {
+      grid-column: 2;
+      margin: 0;
+      font-size: 18px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .modal-close {
+      justify-self: end;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #f1f1f1;
+    }
+
+    .modal-close svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+    }
+
+    .launch-form {
+      padding: 24px 26px 28px;
+    }
+
+    .form-card {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, .08);
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .field {
+      min-height: 74px;
+      display: grid;
+      gap: 5px;
+      padding: 10px 22px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .field:last-child {
+      border-bottom: 0;
+    }
+
+    .field label {
+      color: #999;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      resize: none;
+      color: #000;
+      background: transparent;
+      font-size: 22px;
+      font-weight: 500;
+    }
+
+    .field textarea {
+      min-height: 34px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: center;
+    }
+
+    .primary-action {
+      min-width: 292px;
+      height: 48px;
+      border-radius: 999px;
+      color: #fff;
+      background: #2774dc;
+      font-size: 17px;
+      font-weight: 900;
+      box-shadow: 0 12px 22px rgba(39, 116, 220, .2);
+    }
+
+    .searching .summary-card,
+    .searching .chart-card {
+      outline: 2px solid rgba(43, 104, 246, .12);
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        padding: 18px 14px 40px;
+      }
+
+      .filters {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-left {
+        display: grid;
+        grid-template-columns: 1fr 112px;
+      }
+
+      .search {
+        justify-self: stretch;
+        width: 100%;
+      }
+
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-card {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .summary-card:last-child {
+        border-bottom: 0;
+      }
+
+      .chart-wrap {
+        overflow-x: auto;
+      }
+
+      .chart-svg {
+        width: 920px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Menu lateral">
+      <div class="menu-head">
+        <div class="company-avatar" aria-label="Logo da empresa">
+          <span>58</span>
+        </div>
+        <strong class="menu-title">Menu</strong>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Recolher menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+            <path d="M11 3v18"></path>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="nav" aria-label="Abas do sistema">
+        <button class="nav-item active" type="button" data-route="Inicial">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m3 11 9-8 9 8"></path>
+            <path d="M5 10v10h14V10"></path>
+            <path d="M9 20v-6h6v6"></path>
+          </svg>
+          <span>Inicial</span>
+        </button>
+        <button class="nav-item" type="button" data-route="Lançamentos">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 8v8"></path>
+            <path d="M8 12h8"></path>
+          </svg>
+          <span>Lançamentos</span>
+        </button>
+        <button class="nav-item" type="button" data-route="Gráficos">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 20h18"></path>
+            <path d="M5 16l5-5 4 4 6-8"></path>
+          </svg>
+          <span>Gráficos</span>
+        </button>
+        <button class="nav-item" type="button" data-route="Fluxo de caixa">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+            <path d="M12 2v20"></path>
+          </svg>
+          <span>Fluxo de caixa</span>
+        </button>
+        <button class="nav-item" type="button" data-route="Livro caixa">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+            <path d="M12 2v20"></path>
+          </svg>
+          <span>Livro caixa</span>
+        </button>
+        <button class="nav-item" type="button" data-route="Configurações">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 2v3"></path>
+            <path d="M12 19v3"></path>
+            <path d="M2 12h3"></path>
+            <path d="M19 12h3"></path>
+            <path d="m4.9 4.9 2.1 2.1"></path>
+            <path d="m17 17 2.1 2.1"></path>
+            <path d="m19.1 4.9-2.1 2.1"></path>
+            <path d="m7 17-2.1 2.1"></path>
+          </svg>
+          <span>Configurações</span>
+        </button>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <h1 class="company-name">NOME DA EMPRESA</h1>
+        <div class="top-actions">
+          <button class="top-icon" id="notifyBtn" type="button" aria-label="Notificações">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+              <path d="M13.7 21a2 2 0 0 1-3.4 0"></path>
+            </svg>
+          </button>
+          <button class="add-button" id="addLaunchBtn" type="button" aria-label="Novo lançamento">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14"></path>
+              <path d="M5 12h14"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="filters" aria-label="Filtros">
+        <div class="filter-left">
+          <button class="filter-pill" id="periodFilter" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 3v4"></path>
+              <path d="M17 3v4"></path>
+              <path d="M4 8h16"></path>
+              <rect x="4" y="5" width="16" height="16" rx="2"></rect>
+            </svg>
+            <span id="periodFilterText">2026 - 2036</span>
+            <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </button>
+          <button class="filter-pill" id="frequencyFilter" type="button">
+            <span id="frequencyFilterText">Mensal</span>
+            <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </button>
+        </div>
+
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m16 16 4 4"></path>
+          </svg>
+          <input id="searchInput" type="search" placeholder="Pesquisar..." aria-label="Pesquisar">
+        </label>
+      </section>
+
+      <section class="summary" aria-label="Resumo financeiro">
+        <article class="summary-card" data-summary="Saldo disponível">
+          <span class="metric-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2v20"></path>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </span>
+          <span class="summary-label">Saldo disponível</span>
+          <strong class="summary-value" id="saldoValue">R$ 974.510,00</strong>
+        </article>
+
+        <article class="summary-card" data-summary="Entradas">
+          <span class="metric-icon green" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 19V5"></path>
+              <path d="m5 12 7-7 7 7"></path>
+            </svg>
+          </span>
+          <span class="summary-label">Entradas</span>
+          <strong class="summary-value" id="entradaValue">R$ 6.683.010,00</strong>
+        </article>
+
+        <article class="summary-card" data-summary="Saídas">
+          <span class="metric-icon red" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 5v14"></path>
+              <path d="m19 12-7 7-7-7"></path>
+            </svg>
+          </span>
+          <span class="summary-label">Saídas</span>
+          <strong class="summary-value" id="saidaValue">R$ 5.722.700,00</strong>
+        </article>
+      </section>
+
+      <section class="chart-card" aria-label="Lucro realizado">
+        <div class="chart-head">
+          <div>
+            <h2 class="chart-title">Lucro realizado</h2>
+            <p class="chart-subtitle" id="chartSubtitle">2026 - 2036 · 1198 lançamentos</p>
+          </div>
+          <strong class="chart-period" id="chartPeriod">2026 - 2036</strong>
+        </div>
+
+        <div class="chart-wrap">
+          <svg class="chart-svg" viewBox="0 0 1120 320" role="img" aria-label="Linha de lucro de 2026 a 2036">
+            <line class="guide" x1="70" y1="18" x2="70" y2="310"></line>
+            <line class="guide" x1="170" y1="18" x2="170" y2="310"></line>
+            <line class="guide" x1="270" y1="18" x2="270" y2="310"></line>
+            <line class="guide" x1="370" y1="18" x2="370" y2="310"></line>
+            <line class="guide" x1="470" y1="18" x2="470" y2="310"></line>
+            <line class="guide" x1="570" y1="18" x2="570" y2="310"></line>
+            <line class="guide" x1="670" y1="18" x2="670" y2="310"></line>
+            <line class="guide" x1="770" y1="18" x2="770" y2="310"></line>
+            <line class="guide" x1="870" y1="18" x2="870" y2="310"></line>
+            <line class="guide" x1="970" y1="18" x2="970" y2="310"></line>
+            <line class="guide" x1="1070" y1="18" x2="1070" y2="310"></line>
+
+            <path class="profit-line" d="M 5 234 L 70 231 L 170 226 L 270 220 L 370 209 L 470 214 L 570 196 L 670 184 L 770 150 L 870 139 L 970 99 L 1070 54 L 1135 24"></path>
+
+            <circle class="profit-dot" cx="70" cy="231" r="6"></circle>
+            <circle class="profit-dot" cx="170" cy="226" r="6"></circle>
+            <circle class="profit-dot" cx="270" cy="220" r="6"></circle>
+            <circle class="profit-dot" cx="370" cy="209" r="6"></circle>
+            <circle class="profit-dot" cx="470" cy="214" r="6"></circle>
+            <circle class="profit-dot" cx="570" cy="196" r="6"></circle>
+            <circle class="profit-dot" cx="670" cy="184" r="6"></circle>
+            <circle class="profit-dot" cx="770" cy="150" r="6"></circle>
+            <circle class="profit-dot" cx="870" cy="139" r="6"></circle>
+            <circle class="profit-dot" cx="970" cy="99" r="6"></circle>
+            <circle class="profit-dot" cx="1070" cy="54" r="6"></circle>
+
+            <text class="value-label" x="70" y="218">12.210</text>
+            <text class="value-label" x="170" y="213">18.300</text>
+            <text class="value-label" x="270" y="207">27.350</text>
+            <text class="value-label" x="370" y="196">41.050</text>
+            <text class="value-label" x="470" y="201">36.350</text>
+            <text class="value-label" x="570" y="183">60.850</text>
+            <text class="value-label" x="670" y="171">75.600</text>
+            <text class="value-label" x="770" y="137">118,2 mil</text>
+            <text class="value-label" x="870" y="126">132,7 mil</text>
+            <text class="value-label" x="970" y="86">187,5 mil</text>
+            <text class="value-label" x="1070" y="41">250,3 mil</text>
+
+            <text class="year-label" x="70" y="280">2026</text>
+            <text class="year-label" x="170" y="280">2027</text>
+            <text class="year-label" x="270" y="280">2028</text>
+            <text class="year-label" x="370" y="280">2029</text>
+            <text class="year-label" x="470" y="280">2030</text>
+            <text class="year-label" x="570" y="280">2031</text>
+            <text class="year-label" x="670" y="280">2032</text>
+            <text class="year-label" x="770" y="280">2033</text>
+            <text class="year-label" x="870" y="280">2034</text>
+            <text class="year-label" x="970" y="280">2035</text>
+            <text class="year-label" x="1070" y="280">2036</text>
+          </svg>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="dropdownRoot"></div>
+  <div id="chartTooltip" class="chart-tooltip" hidden></div>
+  <div id="modalRoot" class="modal-backdrop" aria-hidden="true"></div>
+  <div id="toastRoot" class="toast-wrap" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    const $ = selector => document.querySelector(selector);
+    const $$ = selector => Array.from(document.querySelectorAll(selector));
+
+    const money = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+
+    const state = {
+      period: '2026 - 2036',
+      frequency: 'Mensal',
+      saldo: 974510,
+      entradas: 6683010,
+      saidas: 5722700,
+      selectedChartIndex: null
+    };
+
+    const chartData = [
+      { year: '2026', value: '12.210', full: 'R$ 12.210,00' },
+      { year: '2027', value: '18.300', full: 'R$ 18.300,00' },
+      { year: '2028', value: '27.350', full: 'R$ 27.350,00' },
+      { year: '2029', value: '41.050', full: 'R$ 41.050,00' },
+      { year: '2030', value: '36.350', full: 'R$ 36.350,00' },
+      { year: '2031', value: '60.850', full: 'R$ 60.850,00' },
+      { year: '2032', value: '75.600', full: 'R$ 75.600,00' },
+      { year: '2033', value: '118,2 mil', full: 'R$ 118.200,00' },
+      { year: '2034', value: '132,7 mil', full: 'R$ 132.700,00' },
+      { year: '2035', value: '187,5 mil', full: 'R$ 187.500,00' },
+      { year: '2036', value: '250,3 mil', full: 'R$ 250.300,00' }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      bindMenu();
+      bindTopActions();
+      bindFilters();
+      bindSearch();
+      bindSummaryCards();
+      bindChartPoints();
+      updateSummary();
+    });
+
+    function bindMenu() {
+      $('#menuToggle').addEventListener('click', () => {
+        document.body.classList.toggle('nav-collapsed');
+        const collapsed = document.body.classList.contains('nav-collapsed');
+        $('#menuToggle').setAttribute('aria-label', collapsed ? 'Abrir menu' : 'Recolher menu');
+      });
+
+      $$('.nav-item').forEach(button => {
+        button.addEventListener('click', () => {
+          $$('.nav-item').forEach(item => item.classList.remove('active'));
+          button.classList.add('active');
+          toast(`Aba ${button.dataset.route} selecionada.`);
+        });
+      });
+    }
+
+    function bindTopActions() {
+      $('#notifyBtn').addEventListener('click', () => {
+        toast('Nenhuma notificação nova.');
+      });
+
+      $('#addLaunchBtn').addEventListener('click', openLaunchModal);
+    }
+
+    function bindFilters() {
+      $('#periodFilter').addEventListener('click', event => {
+        event.stopPropagation();
+        const options = ['2026 - 2036', ...Array.from({ length: 11 }, (_, index) => String(2026 + index))];
+        openDropdown($('#periodFilter'), options, state.period, value => {
+          state.period = value;
+          $('#periodFilterText').textContent = value;
+          $('#chartPeriod').textContent = value;
+          $('#chartSubtitle').textContent = `${value} · 1198 lançamentos`;
+          if (/^\d{4}$/.test(value)) {
+            selectChartPoint(chartData.findIndex(item => item.year === value), true);
+          }
+          toast(`Período alterado para ${value}.`);
+        });
+      });
+
+      $('#frequencyFilter').addEventListener('click', event => {
+        event.stopPropagation();
+        const options = ['Mensal', 'Trimestral', 'Semestral', 'Anual'];
+        openDropdown($('#frequencyFilter'), options, state.frequency, value => {
+          state.frequency = value;
+          $('#frequencyFilterText').textContent = value;
+          toast(`Visualização alterada para ${value}.`);
+        });
+      });
+
+      document.addEventListener('click', closeDropdown);
+    }
+
+    function bindSearch() {
+      const input = $('#searchInput');
+      input.addEventListener('focus', () => {
+        input.closest('.search').style.boxShadow = '0 0 0 2px rgba(43, 104, 246, .16)';
+      });
+      input.addEventListener('blur', () => {
+        input.closest('.search').style.boxShadow = '';
+      });
+      input.addEventListener('input', () => {
+        const value = input.value.trim();
+        document.body.classList.toggle('searching', Boolean(value));
+        if (value.length >= 3) toast(`Pesquisando por: ${value}`);
+      });
+    }
+
+    function bindSummaryCards() {
+      $$('.summary-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const label = card.dataset.summary;
+          const value = card.querySelector('.summary-value').textContent;
+          toast(`${label}: ${value}`);
+        });
+      });
+    }
+
+    function bindChartPoints() {
+      $$('.profit-dot').forEach((dot, index) => {
+        dot.setAttribute('tabindex', '0');
+        dot.setAttribute('role', 'button');
+        dot.setAttribute('aria-label', `${chartData[index].year}: ${chartData[index].full}`);
+
+        dot.addEventListener('mouseenter', () => showChartTooltip(dot, index));
+        dot.addEventListener('mouseleave', () => {
+          if (state.selectedChartIndex !== index) hideChartTooltip();
+        });
+        dot.addEventListener('focus', () => showChartTooltip(dot, index));
+        dot.addEventListener('blur', hideChartTooltip);
+        dot.addEventListener('click', () => selectChartPoint(index, true));
+        dot.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            selectChartPoint(index, true);
+          }
+        });
+      });
+    }
+
+    function openDropdown(anchor, options, selected, onSelect) {
+      closeDropdown();
+      anchor.classList.add('active');
+
+      const rect = anchor.getBoundingClientRect();
+      const popover = document.createElement('div');
+      popover.className = 'dropdown-popover';
+      popover.style.left = `${rect.left}px`;
+      popover.style.top = `${rect.bottom + 6}px`;
+      popover.style.width = `${Math.max(rect.width, 190)}px`;
+
+      popover.innerHTML = options.map(option => `
+        <button class="dropdown-option ${option === selected ? 'active' : ''}" type="button" data-value="${escapeHtml(option)}">
+          ${escapeHtml(option)}
+        </button>
+      `).join('');
+
+      popover.addEventListener('click', event => {
+        const option = event.target.closest('.dropdown-option');
+        if (!option) return;
+        onSelect(option.dataset.value);
+        closeDropdown();
+      });
+
+      $('#dropdownRoot').appendChild(popover);
+    }
+
+    function closeDropdown() {
+      $('#dropdownRoot').innerHTML = '';
+      $$('.filter-pill.active').forEach(item => item.classList.remove('active'));
+    }
+
+    function showChartTooltip(dot, index) {
+      const data = chartData[index];
+      const rect = dot.getBoundingClientRect();
+      const tooltip = $('#chartTooltip');
+      tooltip.textContent = `${data.year}: ${data.full}`;
+      tooltip.style.left = `${rect.left + rect.width / 2}px`;
+      tooltip.style.top = `${rect.top}px`;
+      tooltip.hidden = false;
+    }
+
+    function hideChartTooltip() {
+      $('#chartTooltip').hidden = true;
+    }
+
+    function selectChartPoint(index, persist) {
+      if (index < 0) return;
+      state.selectedChartIndex = persist ? index : state.selectedChartIndex;
+      $$('.profit-dot').forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === index));
+      $$('.value-label').forEach((label, labelIndex) => label.classList.toggle('highlight', labelIndex === index));
+      showChartTooltip($$('.profit-dot')[index], index);
+      toast(`Lucro em ${chartData[index].year}: ${chartData[index].full}`);
+    }
+
+    function openLaunchModal() {
+      const modal = $('#modalRoot');
+      modal.innerHTML = `
+        <section class="modal-card" role="dialog" aria-modal="true" aria-label="Novo lançamento">
+          <header class="modal-head">
+            <h2 class="modal-title">NOME DA EMPRESA</h2>
+            <button class="modal-close" type="button" aria-label="Fechar" data-close-modal>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </header>
+          <form class="launch-form" id="launchForm">
+            <div class="form-card">
+              <div class="field">
+                <label for="launchDate">Bancos</label>
+                <input id="launchDate" name="date" type="text" value="dd/mm/aaaa">
+              </div>
+              <div class="field">
+                <label for="launchFlow">Fluxo</label>
+                <select id="launchFlow" name="flow">
+                  <option>Entrada</option>
+                  <option>Saída</option>
+                  <option>Transferência</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="launchOrigin">Origem</label>
+                <select id="launchOrigin" name="origin">
+                  <option>Selecionar</option>
+                  <option>Vendas / Balcão e loja</option>
+                  <option>Nubank</option>
+                  <option>Banco do Brasil</option>
+                  <option>Itaú</option>
+                  <option>Caixa físico</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="launchDestiny">Destino</label>
+                <select id="launchDestiny" name="destiny">
+                  <option>Selecionar</option>
+                  <option>Disponível / Nubank</option>
+                  <option>Disponível / Banco do Brasil</option>
+                  <option>Disponível / Itaú</option>
+                  <option>Disponível / Caixa físico</option>
+                  <option>Compras / Mercadorias para revenda</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="launchValue">Valor</label>
+                <input id="launchValue" name="value" type="text" inputmode="numeric" value="R$ 0,00">
+              </div>
+              <div class="field">
+                <label for="launchDescription">Descrição</label>
+                <textarea id="launchDescription" name="description">Descreva o lançamento</textarea>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="primary-action" type="submit">Adicionar lançamento</button>
+            </div>
+          </form>
+        </section>
+      `;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      $('[data-close-modal]').addEventListener('click', closeLaunchModal);
+      modal.onclick = event => {
+        if (event.target === modal) closeLaunchModal();
+      };
+      $('#launchValue').addEventListener('input', formatMoneyInput);
+      $('#launchForm').addEventListener('submit', saveLaunchFromModal);
+      $('#launchDate').focus();
+    }
+
+    function closeLaunchModal() {
+      const modal = $('#modalRoot');
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      modal.onclick = null;
+      modal.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+
+    function saveLaunchFromModal(event) {
+      event.preventDefault();
+      const flow = $('#launchFlow').value;
+      const value = parseCurrency($('#launchValue').value);
+      if (!value) {
+        toast('Informe um valor maior que zero.');
+        return;
+      }
+      if (flow === 'Entrada') state.entradas += value;
+      if (flow === 'Saída') state.saidas += value;
+      state.saldo = state.entradas - state.saidas + 142200;
+      updateSummary();
+      closeLaunchModal();
+      toast('Lançamento adicionado na aba Inicial.');
+    }
+
+    function updateSummary() {
+      $('#saldoValue').textContent = money.format(state.saldo);
+      $('#entradaValue').textContent = money.format(state.entradas);
+      $('#saidaValue').textContent = money.format(state.saidas);
+    }
+
+    function formatMoneyInput(event) {
+      const digits = event.target.value.replace(/\D/g, '');
+      const value = Number(digits || '0') / 100;
+      event.target.value = money.format(value);
+    }
+
+    function parseCurrency(value) {
+      const digits = String(value || '').replace(/\D/g, '');
+      return Number(digits || '0') / 100;
+    }
+
+    function toast(message) {
+      const item = document.createElement('div');
+      item.className = 'toast';
+      item.textContent = message;
+      $('#toastRoot').appendChild(item);
+      setTimeout(() => item.remove(), 2600);
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeDropdown();
+        if ($('#modalRoot').classList.contains('open')) closeLaunchModal();
+      }
+    });
+  </script>
+</body>
+</html>
